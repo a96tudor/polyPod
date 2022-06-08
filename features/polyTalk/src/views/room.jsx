@@ -15,38 +15,67 @@ import { MessagesContext } from "../context/messages.jsx";
 import "./room.css";
 
 const Room = () => {
-    const { activeRoom } = useContext(MessagesContext);
+    const { activeRoom, handleSendMessage } = useContext(MessagesContext);
+
+    const otherPersonsName = activeRoom.messages.filter(
+        (message) => message.sender !== "self"
+    )[0].sender;
+
+    function groupMessages() {
+        const messages = activeRoom.messages;
+        const messageGroups = [];
+        for (let i = 0; i < messages.length; i++) {
+            const currentMessage = messages[i];
+            const currentSender = currentMessage.sender;
+            const messagesToGroup = [];
+            while (currentSender == messages[i]?.sender) {
+                messagesToGroup.push(messages[i]);
+                i++;
+            }
+            i--;
+            messageGroups.push(
+                <MessageGroup
+                    key={i}
+                    direction={currentMessage.direction}
+                    sender={currentSender}
+                    sentTime="just now"
+                >
+                    <MessageGroup.Messages>
+                        {messagesToGroup.map((message, index) => (
+                            <Message
+                                key={index}
+                                model={{
+                                    message: message.message,
+                                }}
+                            ></Message>
+                        ))}
+                    </MessageGroup.Messages>
+                    <MessageGroup.Footer>{currentSender}</MessageGroup.Footer>
+                </MessageGroup>
+            );
+        }
+        return messageGroups;
+    }
+
     return (
         <Screen className="poly-theme-light room">
             <ConversationHeader>
-                <p>{activeRoom.name}</p>
+                <Avatar src={"images/thorsten.png"} name="Thorsten" />
                 <ConversationHeader.Content
-                    userName={activeRoom.name}
+                    userName={otherPersonsName}
                     info="Active 10 mins ago"
                 />
             </ConversationHeader>
             <MainContainer>
                 <ChatContainer>
                     <MessageList>
-                        {activeRoom.messages.map((message, i) => (
-                            <MessageGroup
-                                key={i}
-                                direction={message.direction}
-                                sender={message.sender}
-                                sentTime="just now"
-                            >
-                                <MessageGroup.Messages>
-                                    <Message
-                                        key={i}
-                                        model={{
-                                            message: message.message,
-                                        }}
-                                    ></Message>
-                                </MessageGroup.Messages>
-                            </MessageGroup>
-                        ))}
+                        {groupMessages().map((message) => message)}
                     </MessageList>
-                    <MessageInput placeholder="Type message here" />
+                    <MessageInput
+                        placeholder="Type message here"
+                        attachButton={false}
+                        onSend={handleSendMessage}
+                    />
                 </ChatContainer>
             </MainContainer>
         </Screen>
