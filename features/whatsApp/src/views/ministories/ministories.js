@@ -1,7 +1,7 @@
-import ActivitiesOverTimeMinistory from "./activitiesOverTime.jsx";
+import MessagesOverTimeMinistory from "./messagesOverTime.jsx";
 
 export const ministories = [
-    ActivitiesOverTimeMinistory,
+    MessagesOverTimeMinistory,
 ];
 
 export default ministories;

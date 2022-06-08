@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import i18n from "!silly-i18n";
 
-import "./activitiesOverTimeStory.css";
+import "./messagesOverTimeStory.css";
 import "./datePicker.css";
 import { PolyChart, Tab, Tabs } from "@polypoly-eu/poly-look";
 
@@ -54,14 +54,14 @@ const DatePicker = ({ year, yearRange, onYearChange }) => {
     );
 };
 
-export const ActivitiesOverTimeStorySummary = ({ activitiesOverTime }) => {
+export const MessagesOverTimeStorySummary = ({ messagesOverTime }) => {
     return (
         <div className="render-summary">
             <p className="highlighted-number">
-                {activitiesOverTime.total.toLocaleString("de-DE")}
+                {messagesOverTime.total.toLocaleString("de-DE")}
             </p>
             {i18n.t("activitiesOverTime:summary", {
-                number_activities: activitiesOverTime.total,
+                number_activities: messagesOverTime.total,
             })}
             <p className="poly-small-print">
                 {i18n.t("common:source.your.whatsapp.data")}
@@ -70,15 +70,15 @@ export const ActivitiesOverTimeStorySummary = ({ activitiesOverTime }) => {
     );
 };
 
-export const ActivitiesOverTimeStoryDetails = ({ activitiesOverTime }) => {
+export const MessagesOverTimeStoryDetails = ({ messagesOverTime }) => {
     const yearRange = fillMissingArrayValues(
-        Object.keys(activitiesOverTime.values)
+        Object.keys(messagesOverTime.values)
     );
 
     const yearlyTotals = yearRange.map((year) => {
         return {
             title: year.toString().substring(2, 4),
-            value: activitiesOverTime.values[year]?.total || 0,
+            value: messagesOverTime.values[year]?.total || 0,
         };
     });
 
@@ -89,7 +89,7 @@ export const ActivitiesOverTimeStoryDetails = ({ activitiesOverTime }) => {
     const monthlyTotals = monthsAbbreviation.map((month, index) => {
         return {
             title: month,
-            value: activitiesOverTime.values[selectedYear]?.values[index] || 0,
+            value: messagesOverTime.values[selectedYear]?.values[index] || 0,
         };
     });
 
@@ -100,7 +100,7 @@ export const ActivitiesOverTimeStoryDetails = ({ activitiesOverTime }) => {
             barData: yearlyTotals,
             barWidth: 6,
             barChartLegendText: i18n.t("activitiesOverTime:tab.events.total", {
-                number_events: activitiesOverTime.total,
+                number_events: messagesOverTime.total,
             }),
             barValueColor: null,
             datePicker: <div className="datepicker-filler" />,
@@ -113,7 +113,7 @@ export const ActivitiesOverTimeStoryDetails = ({ activitiesOverTime }) => {
             barWidth: 22,
             barChartLegendText: i18n.t("activitiesOverTime:tab.events.yearly", {
                 number_events:
-                    activitiesOverTime.values[selectedYear]?.total || 0,
+                    messagesOverTime.values[selectedYear]?.total || 0,
             }),
             barValueColor: "white",
             datePicker: (
@@ -150,7 +150,7 @@ export const ActivitiesOverTimeStoryDetails = ({ activitiesOverTime }) => {
         <div className="activities-ministory">
             <p>
                 {i18n.t("activitiesOverTime:summary", {
-                    number_activities: activitiesOverTime.total,
+                    number_activities: messagesOverTime.total,
                 })}
             </p>
             <Tabs key={0}>

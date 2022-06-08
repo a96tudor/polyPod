@@ -1,3 +1,4 @@
 export default {
-    activitiesOverTime: "activitiesOverTime",
+    messagesOverTime: "messagesOverTime",
+    threadParticipants: "threadParticipants",
 };

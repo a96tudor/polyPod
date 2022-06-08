@@ -1,6 +1,6 @@
 {
     "title": "Data from you and about you",
-    "summary": "Since you joined, WhatsApp recorded {{number_activities}} data events from you and about you with date and time.",
+    "summary": "Since you started this conversation, {{number_activities}} were sent.",
     "tab.year": "Year",
     "tab.total": "Total",
     "tab.events.total": "Events ({{number_events}} in total)",
